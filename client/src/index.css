@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+
+  body {
+    @apply bg-ink-900 text-ivory font-sans antialiased;
+    /* A single, very low-contrast field wash. Not an animated gradient —
+       it sits still and gives the near-black page some depth. */
+    background-image:
+      radial-gradient(900px 520px at 12% -8%, rgba(47, 163, 122, 0.13), transparent 62%),
+      radial-gradient(760px 480px at 92% 4%, rgba(232, 102, 60, 0.09), transparent 58%);
+    background-attachment: fixed;
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+
+  ::selection {
+    background: rgba(47, 163, 122, 0.35);
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display;
+    text-wrap: balance;
+  }
+
+  :focus-visible {
+    outline: 2px solid #43BE92;
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* Scrollbars matched to the surface so panels do not sprout white bars. */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #27303D transparent;
+  }
+  *::-webkit-scrollbar { width: 10px; height: 10px; }
+  *::-webkit-scrollbar-thumb {
+    background: #27303D;
+    border-radius: 999px;
+    border: 3px solid transparent;
+    background-clip: content-box;
+  }
+}
+
+@layer components {
+  /* Glass is a supporting technique: navigation, floating panels, key metrics
+     and modals. Solid surfaces carry the rest so hierarchy survives. */
+  .glass-panel {
+    @apply relative rounded-panel border border-white/10 bg-white/[0.045] shadow-panel;
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+  }
+
+  .solid-panel {
+    @apply rounded-panel border border-white/[0.07] bg-ink-700 shadow-lift;
+  }
+
+  .hairline {
+    @apply border-white/[0.08];
+  }
+
+  .eyebrow {
+    @apply font-mono text-micro uppercase tracking-[0.16em] text-ivory-faint;
+  }
+
+  .link-underline {
+    @apply relative transition-colors hover:text-ivory;
+    text-underline-offset: 0.3em;
+  }
+
+  .numeric {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum' 1;
+  }
+
+  /* Used for skeleton loaders. */
+  .shimmer {
+    @apply relative overflow-hidden bg-white/[0.04];
+  }
+  .shimmer::after {
+    content: '';
+    @apply absolute inset-y-0 w-1/2 animate-sweep;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
+  }
+}

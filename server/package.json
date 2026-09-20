@@ -1,0 +1,36 @@
+{
+  "name": "digital-heroes-server",
+  "version": "1.0.0",
+  "description": "Digital Heroes API — subscriptions, Stableford scores, charity contributions and the monthly draw engine.",
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "migrate": "node src/db/migrate.js up",
+    "migrate:down": "node src/db/migrate.js down",
+    "seed": "node seed/seed.js",
+    "db:reset": "node src/db/migrate.js reset && node seed/seed.js",
+    "test": "node --test tests/**/*.test.js",
+    "test:domain": "node --test tests/scores.test.js tests/charity.test.js tests/draw.test.js tests/winners.test.js tests/subscription.test.js",
+    "stripe:listen": "stripe listen --forward-to localhost:4000/api/payments/webhook"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-rate-limit": "^7.4.0",
+    "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
+    "pg": "^8.12.0",
+    "stripe": "^16.8.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "supertest": "^7.0.0"
+  }
+}
